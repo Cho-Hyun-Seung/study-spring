@@ -2,12 +2,9 @@ package com.toki.section1;
 
 import java.sql.*;
 
-public class UserDAO {
+public abstract class UserDAO {
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("org.mariadb.jdbc.Driver");
-        Connection con = DriverManager.getConnection(
-                "jdbc:mariadb://localhost/study","toki0327", "toki0327"
-        );
+        Connection con = getConnection();
 
         PreparedStatement ps = con.prepareStatement(
                 "insert into users(id, name, password) values (?, ?, ?)"
@@ -24,10 +21,7 @@ public class UserDAO {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException{
-        Class.forName("org.mariadb.jdbc.Driver");
-        Connection con = DriverManager.getConnection(
-                "jdbc:mariadb://localhost/study","toki0327", "toki0327"
-        );
+        Connection con = getConnection();
 
         PreparedStatement ps = con.prepareStatement(
                 "SELECT * FROM users where id = ?"
@@ -48,5 +42,13 @@ public class UserDAO {
         return user;
     }
 
+    /* 1. 커넥션 분리 */
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+
+    /* 2. sql 생성 분리 */
+
+
+    /* 3. 커넥션 끊기 분리*/
 
 }
+
