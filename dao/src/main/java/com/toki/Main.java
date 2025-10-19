@@ -1,6 +1,6 @@
 package com.toki;
 
-import com.toki.section1.NUserDAO;
+import com.toki.section1.DConnectionMaker;
 import com.toki.section1.User;
 import com.toki.section1.UserDAO;
 
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDAO dao = new NUserDAO();
+        UserDAO dao = new UserDAO(new DConnectionMaker());
 
         User user = new User();
         user.setId("toki");

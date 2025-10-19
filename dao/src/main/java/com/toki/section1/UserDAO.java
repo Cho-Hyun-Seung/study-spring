@@ -2,9 +2,15 @@ package com.toki.section1;
 
 import java.sql.*;
 
-public abstract class UserDAO {
+public class UserDAO {
+    private ConnectionMaker connectionMaker;
+
+    public UserDAO(ConnectionMaker connectionMaker){
+        this.connectionMaker = connectionMaker;
+    }
+
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection con = getConnection();
+        Connection con = connectionMaker.makeConnection();
 
         PreparedStatement ps = con.prepareStatement(
                 "insert into users(id, name, password) values (?, ?, ?)"
@@ -21,7 +27,7 @@ public abstract class UserDAO {
     }
 
     public User get(String id) throws ClassNotFoundException, SQLException{
-        Connection con = getConnection();
+        Connection con = connectionMaker.makeConnection();
 
         PreparedStatement ps = con.prepareStatement(
                 "SELECT * FROM users where id = ?"
@@ -41,14 +47,6 @@ public abstract class UserDAO {
 
         return user;
     }
-
-    /* 1. 커넥션 분리 */
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
-
-    /* 2. sql 생성 분리 */
-
-
-    /* 3. 커넥션 끊기 분리*/
 
 }
 
