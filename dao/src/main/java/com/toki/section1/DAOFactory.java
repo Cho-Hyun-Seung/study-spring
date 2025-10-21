@@ -1,7 +1,15 @@
 package com.toki.section1;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+
+// 애플리케이션 컨텍스트 또는 빅 팩토리가 사용할 설정 정보라는 표시
+@Configuration
 public class DAOFactory {
 
+    // 오브젝트 생성을 담당하는 IoC용 메소드라는 표시
+    @Bean
     public UserDAO userDAO(){
         return new UserDAO(connectionMaker());
     }
@@ -11,6 +19,7 @@ public class DAOFactory {
 //        return new UserDAO(connectionMaker());
 //    }
 
+    @Bean
     public ConnectionMaker connectionMaker(){
         return new DConnectionMaker();
     }
